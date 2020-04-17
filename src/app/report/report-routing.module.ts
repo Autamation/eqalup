@@ -9,7 +9,7 @@ import { UserService } from '../user.service';
 const routes: Routes = [
   {path : '' , component : ReportHomeComponent},
   {path : "dashboard" , component : ReportDetailsComponent , canActivate : [UserService]},
-  {path : "details" , component : ChartComponent , canActivate : [UserService]}
+  {path : "details/:id" , component : ChartComponent , canActivate : [UserService]}
 ];
 
 @NgModule({

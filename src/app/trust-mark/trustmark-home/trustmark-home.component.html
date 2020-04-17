@@ -46,7 +46,10 @@
                               </div>
                         </div>
                         <div class="card-body" *ngIf="loggedinUser$.value['userTypeCode'] === 'i' || loggedinUser$.value['userTypeCode'] === 'b'">
-                          <h3 class="card-title">Please select a XLSX file which has all the URL's that needs to be tested, then click on Test pages button given below.</h3>
+                          <h3 class="card-title">Please click on Download Template, add all the URL's that needs to be tested and click on Choose File to upload the template, then click on Test pages button given below.</h3>
+                            <div class="col mg-tp-10">
+                                <button type="button" mat-raised-button (click)="downloadTemplate()">Download Template</button>
+                            </div>
                             <div class="col mg-tp-10">
                                 <button type="button" mat-raised-button (click)="fileInput.click()">Choose File</button>
                                 <label class="mg-lt-10"> {{path}} </label>

@@ -9,26 +9,26 @@ import { UserService } from './user.service';
 })
 export class SubscriptionService {
   rootUrl = "http://119.82.97.217:9091/equalitylabs";
-  //rootUrl = "http://localhost:8080/equalitylabs";
+  // rootUrl = "http://localhost:8080/equalitylabs";
   signedin$ = new BehaviorSubject(false);
   loggedinUser$ = new BehaviorSubject({});
   request = {};
 
   constructor(
-    private httpClient: HttpClient, 
+    private httpClient: HttpClient,
     private router: Router,
-    private userService : UserService
-    ) {
-      this.loggedinUser$ = this.userService.loggedinUser$;
-      this.signedin$ = this.userService.signedin$;
-     }
+    private userService: UserService
+  ) {
+    this.loggedinUser$ = this.userService.loggedinUser$;
+    this.signedin$ = this.userService.signedin$;
+  }
 
-  changePlan(plan : string,planCode : string){
+  changePlan(plan: string, planCode: string) {
 
     this.request['userType'] = plan;
     this.request['userTypeCode'] = planCode;
     this.request['email'] = this.loggedinUser$.value['email'];
-    return this.httpClient.post(this.rootUrl + "/changePlan",this.request)
+    return this.httpClient.post(this.rootUrl + "/changePlan", this.request)
   }
 
 }

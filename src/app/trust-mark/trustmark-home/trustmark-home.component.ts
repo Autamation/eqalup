@@ -4,6 +4,7 @@ import { UserService } from "src/app/user.service";
 import { BehaviorSubject, pipe } from "rxjs";
 import { Router } from "@angular/router";
 import { AccessibilityService } from "src/app/accessibility.service";
+import { saveAs } from  'file-saver'
 
 @Component({
   selector: "app-trustmark-home",
@@ -13,6 +14,7 @@ import { AccessibilityService } from "src/app/accessibility.service";
 export class TrustmarkHomeComponent implements OnInit {
   signedin$ = new BehaviorSubject(false);
   loggedinUser$ = new BehaviorSubject({});
+  response$ = new BehaviorSubject({});
   error: any;
   loadingStatus = false;
   capacity = 0;
@@ -23,6 +25,7 @@ export class TrustmarkHomeComponent implements OnInit {
     private accessibilityService: AccessibilityService
   ) {
     this.loggedinUser$ = this.userService.loggedinUser$;
+    this.response$ = this.accessibilityService.response$;
   }
 
   path = "";
@@ -52,7 +55,7 @@ export class TrustmarkHomeComponent implements OnInit {
       })
       .subscribe({
         next: response => {
-          this.router.navigateByUrl("/report");
+          this.router.navigate(['/report',this.response$.value['id']]);
         },
         error: err => {
           if (!err.status) {
@@ -75,7 +78,7 @@ export class TrustmarkHomeComponent implements OnInit {
     formData.append("email", this.loggedinUser$.value["email"]);
     this.accessibilityService.testMultipleUrl(formData).subscribe({
       next: response => {
-        this.router.navigateByUrl("/report");
+        this.router.navigate(['/report',this.response$.value['id']]);
       },
       error: err => {
         if (!err.status) {
@@ -88,6 +91,18 @@ export class TrustmarkHomeComponent implements OnInit {
         this.loadingStatus = false;
       }
     });
+  }
+
+  downloadTemplate(){
+
+    this.accessibilityService.downloadReport({downloadTemplate : true}).subscribe({
+        next : (response : any) =>{
+          let blob = new Blob([response],{type: 'application/octet-stream'});
+          let file = new File([blob],'URL_TEMPLETE_FILE.xlsx',{type: 'application/octet-stream'});
+          saveAs(file);
+        }
+    });
+
   }
 
   onFileSelected() {

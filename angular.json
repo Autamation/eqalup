@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "eQualityLabs": {
+    "equality": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/eQualityLabs",
+            "outputPath": "dist/equality",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -63,18 +63,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eQualityLabs:build"
+            "browserTarget": "equality:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eQualityLabs:build:production"
+              "browserTarget": "equality:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eQualityLabs:build"
+            "browserTarget": "equality:build"
           }
         },
         "test": {
@@ -112,16 +112,19 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "eQualityLabs:serve"
+            "devServerTarget": "equality:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "eQualityLabs:serve:production"
+              "devServerTarget": "equality:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "eQualityLabs"
+  "defaultProject": "equality",
+  "cli": {
+    "analytics": false
+  }
 }

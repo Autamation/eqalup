@@ -3,6 +3,8 @@ import { BehaviorSubject } from 'rxjs';
 import { AccessibilityService } from '../accessibility.service';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { saveAs } from 'file-saver'
+import * as URLParse from 'url-parse';
 
 @Component({
   selector: 'app-dashboard',
@@ -26,9 +28,30 @@ export class DashboardComponent implements OnInit {
     this.validateTestRunDataInSessionStorage(this.loggedinUser$.value['email']);
   }
 
-  viewDetails(runid : number){
-    this.response$.next(this.testRunsResponse$.value[runid]);
+  viewDetails(rowid : number,runid : number){
+    this.response$.next(this.testRunsResponse$.value[rowid]);
     this.router.navigateByUrl('/report');
+    this.router.navigate(['report',runid]);
+  }
+  downloadreport(runid : number,urlCount : number,url : string){
+    const options = {
+      downloadMultiReport : true,
+      runId : runid,
+      email : this.loggedinUser$.value['email'],
+
+    }
+    this.accessibilityService.downloadReport(options).subscribe({
+      next : (response : any) =>{
+        let blob = new Blob([response],{type: 'application/octet-stream'});
+        let file : File ;
+        if(urlCount === 1 &&  url !== null &&  url.length > 0){
+          file = new File([blob], URLParse(url).hostname + '.xlsx',{type: 'application/octet-stream'});
+        }else {
+          file = new File([blob],'REPORT.xlsx',{type: 'application/octet-stream'});
+        }
+        saveAs(file);
+      }
+    });
   }
 
   getTestRunsData(){

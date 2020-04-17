@@ -11,7 +11,7 @@ export class AccessibilityService {
   //rootUrl = "http://localhost:8080/equalitylabs";
 
   response$ = new BehaviorSubject({});
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   testSingleUrl = (req: any) => {
     return this.httpClient.post(this.rootUrl + "/testpage", req).pipe(
@@ -32,11 +32,15 @@ export class AccessibilityService {
   };
 
 
-  getTestRunsData = (email : string) => {
-    return this.httpClient.post<[]>(this.rootUrl + '/testruns', {email});
+  getTestRunsData = (email: string) => {
+    return this.httpClient.post<[]>(this.rootUrl + '/testruns', { email });
   }
 
-  getTestRunsCount = (email : string) => {
-    return this.httpClient.post<string>(this.rootUrl + '/testrunscount',{email});
+  getTestRunsCount = (email: string) => {
+    return this.httpClient.post<string>(this.rootUrl + '/testrunscount', { email });
+  }
+
+  downloadReport = (request: any) => {
+    return this.httpClient.post(this.rootUrl + '/downloadreport', request, { responseType: 'blob' });
   }
 }

@@ -22,7 +22,7 @@ const routes: Routes = [
   { path: 'planconfirm/:type', component: PlanConfirmComponent, canActivate : [UserService] },
   { path: 'profile', component: ProfileComponent, canActivate : [UserService] },
   { path: 'dashboard', component : DashboardComponent , canActivate : [UserService]},
-  { path: 'report', loadChildren: () => import('./report/report.module').then(m => m.ReportModule),canActivate : [UserService] },
+  { path: 'report/:id', loadChildren: () => import('./report/report.module').then(m => m.ReportModule),canActivate : [UserService] },
   { path: 'trustmark', loadChildren: () => import('./trust-mark/trust-mark.module').then(m => m.TrustMarkModule),canActivate : [UserService]},
   { path: 'resources', loadChildren: () => import('./resources/resources.module').then(m => m.ResourcesModule) },
   { path: 'training', loadChildren: () => import('./training/training.module').then(m => m.TrainingModule) },

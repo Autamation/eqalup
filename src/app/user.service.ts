@@ -14,9 +14,9 @@ import {
 })
 export class UserService implements CanActivate {
   rootUrl = "http://119.82.97.217:9091/equalitylabs";
-  //rootUrl = "http://localhost:8080/equalitylabs";
+  // rootUrl = "http://localhost:8080/equalitylabs";
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router) { }
   signedin$ = new BehaviorSubject(false);
   loggedinUser$ = new BehaviorSubject({});
 
@@ -56,11 +56,11 @@ export class UserService implements CanActivate {
     );
   };
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) { 
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     if (!this.signedin$.value) {
-      if(state.url === '/trustmark'){
+      if (state.url === '/trustmark') {
         this.router.navigate(["/plans"]);
-      }else {
+      } else {
         this.router.navigate(["/login"], {
           queryParams: { redirect: state.url }
         });

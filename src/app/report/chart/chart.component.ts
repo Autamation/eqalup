@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { AccessibilityService } from 'src/app/accessibility.service';
 import { UserService } from 'src/app/user.service';
+import { Location } from '@angular/common'
 
 @Component({
   selector: 'app-chart',
@@ -21,17 +22,22 @@ export class ChartComponent implements OnInit {
     private accessibilityService: AccessibilityService, 
     private userService: UserService, 
     private router: Router, 
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private location: Location) {
     this.response$ = this.accessibilityService.response$;
     this.pieChartData = [];
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParams.subscribe((params: ParamMap) => {
+    this.activatedRoute.params.subscribe((params: ParamMap) => {
       this.urlid = params['id'];
       this.summaryData = this.response$.value['testDetails'][this.urlid];
       this.pieChartData = [this.summaryData['failedTests'], this.summaryData['passedTests']];
     })
+  }
+
+  goback(){
+    this.location.back();
   }
 
 }

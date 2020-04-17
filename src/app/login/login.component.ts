@@ -59,7 +59,11 @@ export class LoginComponent implements OnInit {
         if (response != null) {
           this.loggedin$.next(true);
           if (this.redirectPath !== undefined && this.redirectPath !== "") {
-            this.router.navigateByUrl(this.redirectPath);
+            if(this.redirectPath.indexOf('dashboard') > -1 || this.redirectPath.indexOf('report') > -1 ){
+              this.router.navigateByUrl('/dashboard');
+            }else {
+              this.router.navigateByUrl(this.redirectPath);
+            }
           } else {
             this.router.navigateByUrl("/");
           }

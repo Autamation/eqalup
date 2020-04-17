@@ -68,3 +68,6 @@ button.disabled:hover {
     cursor: not-allowed !important;
  }
 
+ .text-align-right {
+     text-align: right;
+ }
